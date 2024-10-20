@@ -3,14 +3,28 @@
 @tailwind utilities;
 
 :root {
-  --background: #ededed;
-  --foreground: #171717;
+  /* --background: #faf4ed; */
+  --background: rgb(181, 171, 198);
+  --background: no-repeat
+    linear-gradient(
+      180deg,
+      rgba(137, 139, 188, 1) 0%,
+      rgba(209, 192, 205, 1) 100%
+    );
+  --foreground: #292948;
 }
 
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #242529;
+    --foreground: #fff2e3;
+  }
+} */
+
 body {
+  min-height: 100vh;
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {

@@ -1,14 +1,7 @@
-import { useRouter } from 'next/router';
+import BlogPostDetail from '@/app/components/BlogPost';
 
-export default function BlogPostPage() {
-  const router = useRouter();
-  const { id, slug } = router.query;
+const BlogPostPage = () => {
+  return <BlogPostDetail />;
+};
 
-  return (
-    <div>
-      <p>
-        Blog Post: {id} {slug}
-      </p>
-    </div>
-  );
-}
+export default BlogPostPage;
