@@ -1,6 +1,8 @@
+'use client';
+
 import { categories } from '@/app/utils/constants';
 
-const Step2: React.FC = () => {
+const Step2 = () => {
   return (
     <div>
       <h2>Step 2: Blog Summary & Category</h2>

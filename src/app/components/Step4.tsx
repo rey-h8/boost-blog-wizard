@@ -1,3 +1,5 @@
+'use client';
+
 import Button from './Button';
 
 const Step4: React.FC = () => {

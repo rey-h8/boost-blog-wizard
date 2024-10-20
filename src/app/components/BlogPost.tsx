@@ -1,14 +1,9 @@
-interface BlogPostDetailProps {
-  id: number;
-  slug: string;
-}
+'use client';
 
-const BlogPostDetail = ({ id, slug }: BlogPostDetailProps) => {
+const BlogPostDetail = () => {
   return (
     <div>
-      <h1 className='text-xl font-bold'>
-        Blog Post {id} {slug}
-      </h1>
+      <h1 className='text-xl font-bold'>Blog Post Detail</h1>
     </div>
   );
 };

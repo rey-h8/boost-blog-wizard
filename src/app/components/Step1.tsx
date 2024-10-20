@@ -1,4 +1,6 @@
-const Step1: React.FC = () => {
+'use client';
+
+const Step1 = () => {
   return (
     <div>
       <h2>Step 1: Blog Metadata</h2>

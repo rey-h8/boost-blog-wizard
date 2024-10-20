@@ -1,4 +1,6 @@
-const Step3: React.FC = () => {
+'use client';
+
+const Step3 = () => {
   return (
     <div>
       <h2>Step 3: Blog Content</h2>
