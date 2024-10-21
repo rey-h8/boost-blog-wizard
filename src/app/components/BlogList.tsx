@@ -1,5 +1,6 @@
 'use client';
 
+import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import { useBlog } from '../context/BlogContext';
 
@@ -45,8 +46,8 @@ export default function BlogList() {
               className='flex flex-col h-full'
             >
               <div className='flex flex-col h-full'>
-                <p className='text-xs text-gray-500/80 font-medium tracking-wider'>
-                  {new Date(post.date).toLocaleDateString()}
+                <p className='text-xs text-gray-500 font-medium tracking-wider'>
+                  {formatDate(post.date)}
                 </p>
                 <h2 className='text-xl font-semibold line-clamp-2 group-hover:underline'>
                   {post.title}

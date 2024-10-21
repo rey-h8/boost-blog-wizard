@@ -1,6 +1,6 @@
 'use client';
 
-import { format, parse } from 'date-fns';
+import { formatDate } from '@/lib/utils';
 import { useParams } from 'next/navigation';
 import { useBlog } from '../context/BlogContext';
 
@@ -14,12 +14,7 @@ const BlogPostDetail = () => {
 
   let formattedDate = '';
   if (post) {
-    parse(post.date, 'dd-MM-yyyy', new Date());
-
-    formattedDate = format(
-      parse(post.date, 'dd-MM-yyyy', new Date()),
-      'dd MMMM yyyy'
-    );
+    formattedDate = formatDate(post.date);
   }
 
   return post ? (
