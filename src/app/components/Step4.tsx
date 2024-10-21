@@ -9,11 +9,11 @@ import {
 } from '../context/BlogContext';
 
 const Step4 = () => {
-  const { state, errors, setErrors, validatePost } = useBlog();
+  const { state, dispatch, validatePost } = useBlog();
 
   useEffect(() => {
     const formErrors = validatePost(state.currentPost as NewBlogPost);
-    setErrors(formErrors);
+    dispatch({ type: 'SET_ERRORS', payload: formErrors });
   }, [state.currentPost]);
 
   const ReviewItem = ({
@@ -49,9 +49,9 @@ const Step4 = () => {
             </p>
           </div>
         )}
-        {errors[field as keyof BlogPostError] && (
+        {state.errors[field as keyof BlogPostError] && (
           <small className={clsx(['text-red-700', errorClassName])}>
-            {errors[field as keyof BlogPostError]}
+            {state.errors[field as keyof BlogPostError]}
           </small>
         )}
       </div>

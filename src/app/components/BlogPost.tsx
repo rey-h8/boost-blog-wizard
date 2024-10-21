@@ -3,6 +3,7 @@
 import { formatDate } from '@/lib/utils';
 import { useParams } from 'next/navigation';
 import { useBlog } from '../context/BlogContext';
+import LoadingSpinner from './LoadingSpinner';
 
 const BlogPostDetail = () => {
   const {
@@ -37,7 +38,9 @@ const BlogPostDetail = () => {
       <p className='text-lg/7 mt-4 whitespace-pre-line'>{post?.content}</p>
     </div>
   ) : (
-    <p>Loading post...</p>
+    <div className='flex justify-center items-center h-[calc(100%-80px)]'>
+      <LoadingSpinner className='size-24 stroke-white' />
+    </div>
   );
 };
 

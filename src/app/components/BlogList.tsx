@@ -1,12 +1,14 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
 import { useBlog } from '../context/BlogContext';
+import LoadingSpinner from './LoadingSpinner';
 
 export default function BlogList() {
   const {
-    state: { posts },
+    state: { posts, isReady },
   } = useBlog();
 
   const CategoryTech = () => {
@@ -33,8 +35,13 @@ export default function BlogList() {
     );
   };
 
-  return (
+  return !isReady ? (
+    <div className='flex justify-center items-center h-[calc(100%-80px)]'>
+      <LoadingSpinner className='size-24 stroke-white' />
+    </div>
+  ) : (
     <div className='container mx-auto p-4 pb-10'>
+      {!posts.length && <EmptyList />}
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
         {posts.map((post) => (
           <li
@@ -72,6 +79,24 @@ export default function BlogList() {
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+function EmptyList() {
+  return (
+    <div className='flex flex-col justify-center items-center container p-6 md:p-10 xl:px-14  mx-auto w-full max-w-3xl 2xl:max-w-4xl bg-white/90 rounded-xl'>
+      <h2 className='text-2xl font-semibold mb-4 '>No Posts Yet</h2>
+      <p className='text-lg mb-6 text-center'>
+        It looks like you haven't written any posts yet 😯
+        <br />
+        Start sharing your thoughts and ideas with the world! 🌍
+      </p>
+      <Link href='/blog/create-post'>
+        <Button>
+          <p className='mr-1'>✍️</p> Create Your First Post
+        </Button>
+      </Link>
     </div>
   );
 }

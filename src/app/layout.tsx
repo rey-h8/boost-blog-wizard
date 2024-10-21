@@ -32,10 +32,10 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${fontClass} h-screen overflow-y-auto relative`}>
         <Toaster richColors />
-        <Header />
-        <div className='mt-20 h-screen'>
-          <BlogProvider>{children}</BlogProvider>
-        </div>
+        <BlogProvider>
+          <Header />
+          <div className='mt-20 h-screen'>{children}</div>
+        </BlogProvider>
       </body>
     </html>
   );

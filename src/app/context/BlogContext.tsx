@@ -3,13 +3,7 @@
 import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/navigation';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import slugify from 'slugify';
 import { toast } from 'sonner';
 
@@ -37,26 +31,32 @@ export type BlogPostError = {
 type BlogState = {
   posts: BlogPost[];
   currentPost: Partial<BlogPost>;
+  isReady: boolean;
+  errors: BlogPostError;
 };
 
 type BlogAction =
   | { type: 'ADD_POST'; payload: NewBlogPost }
   | { type: 'SET_CURRENT_POST'; payload: Partial<BlogPost> }
   | { type: 'RESET_CURRENT_POST' }
-  | { type: 'REPLACE_POSTS'; payload: BlogPost[] };
+  | { type: 'REPLACE_POSTS'; payload: BlogPost[] }
+  | { type: 'SET_ERRORS'; payload: BlogPostError }
+  | { type: 'SET_READY'; payload: boolean };
 
 type BlogContextType = {
   state: BlogState;
   dispatch: React.Dispatch<BlogAction>;
   addPost: () => void;
-  errors: BlogPostError;
-  setErrors(errors: BlogPostError): void;
+  fetchPosts: () => BlogPost[];
+
   validatePost: (newPost: NewBlogPost) => BlogPostError;
 };
 
 const initialBlogState: BlogState = {
   posts: [],
   currentPost: {},
+  isReady: false,
+  errors: {},
 };
 
 const blogReducer = (state: BlogState, action: BlogAction): BlogState => {
@@ -72,6 +72,7 @@ const blogReducer = (state: BlogState, action: BlogAction): BlogState => {
         ...state,
         posts: [...state.posts, newPost],
       };
+
     case 'SET_CURRENT_POST':
       return {
         ...state,
@@ -81,6 +82,16 @@ const blogReducer = (state: BlogState, action: BlogAction): BlogState => {
       return {
         ...state,
         currentPost: {},
+      };
+    case 'SET_ERRORS':
+      return {
+        ...state,
+        errors: action.payload,
+      };
+    case 'SET_READY':
+      return {
+        ...state,
+        isReady: action.payload,
       };
     case 'REPLACE_POSTS':
       return {
@@ -98,139 +109,12 @@ const BlogContext = createContext<BlogContextType | undefined>(undefined);
 
 export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(blogReducer, initialBlogState);
-  const [errors, setErrors] = useState<BlogPostError>({});
   const router = useRouter();
 
   useEffect(() => {
-    const dummyPosts = [
-      {
-        id: 'c7K9l4DgH3',
-        title: '5 Essential Tools for Web Developers in 2024',
-        summary:
-          'This blog explores 5 essential tools for web developers in 2024',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: '5-essential-tools-for-web-developers-in-2024',
-        date: '23-09-2024',
-        category: 'Tech',
-        author: 'Alex Thompson',
-      },
-      {
-        id: 'wK2s8YgT1B',
-        title: 'A Deep Dive into Node.js Performance Optimization',
-        summary:
-          'This blog explores a deep dive into node.js performance optimization',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: 'a-deep-dive-into-node-js-performance-optimization',
-        date: '07-10-2024',
-        category: 'Tech',
-        author: 'Sophia Miller',
-      },
-      {
-        id: 'xR1q5WbC8N',
-        title: 'Understanding Kubernetes: A Beginner’s Guide',
-        summary:
-          'This blog explores understanding kubernetes: a beginner’s guide',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: 'understanding-kubernetes-a-beginners-guide',
-        date: '20-09-2024',
-        category: 'Tech',
-        author: 'James Wright',
-      },
-      {
-        id: 'zP4n3DkV6L',
-        title: 'The Future of React Native: Trends to Watch',
-        summary:
-          'This blog explores the future of react native: trends to watch',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: 'the-future-of-react-native-trends-to-watch',
-        date: '01-10-2024',
-        category: 'Tech',
-        author: 'Emily Clark',
-      },
-      {
-        id: 'hM5t7NqX9F',
-        title: 'Exploring the Latest Features of PostgreSQL 15',
-        summary:
-          'This blog explores exploring the latest features of postgresql 15',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: 'exploring-the-latest-features-of-postgresql-15',
-        date: '17-09-2024',
-        category: 'Tech',
-        author: 'Michael Brown',
-      },
-      {
-        id: 'bA3v2XrL9H',
-        title: 'Top 5 Business Trends Shaping 2024',
-        summary:
-          'This blog discusses the top 5 business trends that are expected to shape 2024.',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: 'top-5-business-trends-shaping-2024',
-        date: '25-09-2024',
-        category: 'Business',
-        author: 'Rachel Adams',
-      },
-      {
-        id: 'pR6j8NzQ2V',
-        title: 'How AI is Revolutionizing the Business World',
-        summary:
-          'This blog examines how AI is transforming various sectors in the business world.',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: 'how-ai-is-revolutionizing-the-business-world',
-        date: '05-10-2024',
-        category: 'Business',
-        author: 'John Davis',
-      },
-      {
-        id: 'vK7m4YeQ8B',
-        title: '10 Simple Habits for a Healthier Lifestyle',
-        summary:
-          'This blog covers 10 simple habits you can adopt for a healthier lifestyle.',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: '10-simple-habits-for-a-healthier-lifestyle',
-        date: '02-10-2024',
-        category: 'Lifestyle',
-        author: 'Sarah Wilson',
-      },
-      {
-        id: 'dH9n1QrS5L',
-        title: 'The Ultimate Guide to Work-Life Balance',
-        summary:
-          'This blog provides the ultimate guide to achieving a better work-life balance.',
-        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
-
-In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
-        slug: 'the-ultimate-guide-to-work-life-balance',
-        date: '30-09-2024',
-        category: 'Lifestyle',
-        author: 'Chris Taylor',
-      },
-    ];
-
     const savedPosts = localStorage.getItem('bwiz-posts');
 
     let posts = JSON.parse(savedPosts || '[]');
-
-    if (!posts.length) {
-      posts = dummyPosts.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-    }
 
     dispatch({ type: 'REPLACE_POSTS', payload: posts });
 
@@ -238,6 +122,7 @@ In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa l
 
     let currentPost = JSON.parse(savedForm || '{}');
     dispatch({ type: 'SET_CURRENT_POST', payload: currentPost });
+    dispatch({ type: 'SET_READY', payload: true });
   }, []);
 
   useEffect(() => {
@@ -258,7 +143,7 @@ In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa l
   const addPost = () => {
     const postErrors = validatePost(state.currentPost as NewBlogPost);
 
-    setErrors(postErrors);
+    dispatch({ type: 'SET_ERRORS', payload: postErrors });
 
     if (!Object.keys(postErrors).length) {
       const newPost: NewBlogPost = {
@@ -273,8 +158,16 @@ In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa l
 
       toast.success('Post submitted successfully.');
 
+      dispatch({ type: 'SET_ERRORS', payload: {} });
+
       router.push('/');
+
+      dispatch({ type: 'RESET_CURRENT_POST' });
     }
+  };
+
+  const fetchPosts = () => {
+    return state.posts;
   };
 
   const validatePost = (newPost: NewBlogPost) => {
@@ -293,7 +186,7 @@ In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa l
 
   return (
     <BlogContext.Provider
-      value={{ state, dispatch, addPost, errors, setErrors, validatePost }}
+      value={{ state, dispatch, addPost, fetchPosts, validatePost }}
     >
       {children}
     </BlogContext.Provider>
