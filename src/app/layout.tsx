@@ -34,7 +34,7 @@ export default function RootLayout({
         <Toaster richColors />
         <BlogProvider>
           <Header />
-          <div className='mt-20 h-screen'>{children}</div>
+          <div className='mt-20'>{children}</div>
         </BlogProvider>
       </body>
     </html>

@@ -79,6 +79,7 @@ const blogReducer = (state: BlogState, action: BlogAction): BlogState => {
         currentPost: { ...state.currentPost, ...action.payload },
       };
     case 'RESET_CURRENT_POST':
+      window.localStorage.removeItem('bwiz-currentPost');
       return {
         ...state,
         currentPost: {},
