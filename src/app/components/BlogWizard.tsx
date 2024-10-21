@@ -30,6 +30,11 @@ const BlogWizard = () => {
     addPost();
   };
 
+  const handleReset = () => {
+    dispatch({ type: 'RESET_CURRENT_POST' });
+    setStep(1);
+  };
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -49,15 +54,19 @@ const BlogWizard = () => {
     <div className='h-full p-6'>
       <div className='py-4 px-6 bg-white max-w-2xl mx-auto rounded-lg '>
         {renderStep()}
+
         <div className='flex flex-row mt-8 gap-4'>
-          <div className='flex flex-row w-full justify-end '>
+          <div className='flex flex-1'>
+            <Button variant='ghost' onClick={handleReset}>
+              <p className='text-muted-foreground'>Reset</p>
+            </Button>
+          </div>
+          <div className='flex flex-row justify-end gap-4'>
             {step > 1 && (
               <Button variant='outline' onClick={handleBack}>
                 Back
               </Button>
             )}
-          </div>
-          <div className='flex flex-row w-full justify-start '>
             {step < 4 && <Button onClick={handleNext}>Next</Button>}
             {step === 4 && (
               <Button

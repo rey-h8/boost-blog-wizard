@@ -110,7 +110,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: '5-essential-tools-for-web-developers-in-2024',
-        date: '2024-09-23',
+        date: '23-09-2024',
         category: 'Tech',
         author: 'Alex Thompson',
       },
@@ -122,7 +122,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: 'a-deep-dive-into-node-js-performance-optimization',
-        date: '2024-10-07',
+        date: '07-10-2024',
         category: 'Tech',
         author: 'Sophia Miller',
       },
@@ -134,7 +134,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: 'understanding-kubernetes-a-beginners-guide',
-        date: '2024-09-29',
+        date: '20-09-2024',
         category: 'Tech',
         author: 'James Wright',
       },
@@ -146,7 +146,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: 'the-future-of-react-native-trends-to-watch',
-        date: '2024-10-01',
+        date: '01-10-2024',
         category: 'Tech',
         author: 'Emily Clark',
       },
@@ -158,7 +158,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: 'exploring-the-latest-features-of-postgresql-15',
-        date: '2024-09-17',
+        date: '17-09-2024',
         category: 'Tech',
         author: 'Michael Brown',
       },
@@ -170,7 +170,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: 'top-5-business-trends-shaping-2024',
-        date: '2024-09-25',
+        date: '25-09-2024',
         category: 'Business',
         author: 'Rachel Adams',
       },
@@ -182,7 +182,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: 'how-ai-is-revolutionizing-the-business-world',
-        date: '2024-10-05',
+        date: '05-10-2024',
         category: 'Business',
         author: 'John Davis',
       },
@@ -194,7 +194,7 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: '10-simple-habits-for-a-healthier-lifestyle',
-        date: '2024-10-02',
+        date: '02-10-2024',
         category: 'Lifestyle',
         author: 'Sarah Wilson',
       },
@@ -206,13 +206,13 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         slug: 'the-ultimate-guide-to-work-life-balance',
-        date: '2024-09-30',
+        date: '30-09-2024',
         category: 'Lifestyle',
         author: 'Chris Taylor',
       },
     ];
 
-    const savedPosts = localStorage.getItem('bwiz-blogPosts');
+    const savedPosts = localStorage.getItem('bwiz-posts');
 
     let posts = JSON.parse(savedPosts || '[]');
 
@@ -221,13 +221,27 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     dispatch({ type: 'REPLACE_POSTS', payload: posts });
+
+    const savedForm = localStorage.getItem('bwiz-currentPost');
+
+    let currentPost = JSON.parse(savedForm || '{}');
+    dispatch({ type: 'SET_CURRENT_POST', payload: currentPost });
   }, []);
 
   useEffect(() => {
     if (state.posts.length) {
-      localStorage.setItem('bwiz-blogPosts', JSON.stringify(state.posts));
+      localStorage.setItem('bwiz-posts', JSON.stringify(state.posts));
     }
   }, [state.posts]);
+
+  useEffect(() => {
+    if (Object.keys(state.currentPost).length) {
+      localStorage.setItem(
+        'bwiz-currentPost',
+        JSON.stringify(state.currentPost)
+      );
+    }
+  }, [state.currentPost]);
 
   const addPost = () => {
     const postErrors = validatePost(state.currentPost as NewBlogPost);
