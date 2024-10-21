@@ -114,13 +114,13 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const savedPosts = localStorage.getItem('bwiz-posts');
 
-    let posts = JSON.parse(savedPosts || '[]');
+    const posts = JSON.parse(savedPosts || '[]');
 
     dispatch({ type: 'REPLACE_POSTS', payload: posts });
 
     const savedForm = localStorage.getItem('bwiz-currentPost');
 
-    let currentPost = JSON.parse(savedForm || '{}');
+    const currentPost = JSON.parse(savedForm || '{}');
     dispatch({ type: 'SET_CURRENT_POST', payload: currentPost });
     dispatch({ type: 'SET_READY', payload: true });
   }, []);

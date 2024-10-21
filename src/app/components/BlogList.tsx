@@ -37,10 +37,10 @@ export default function BlogList() {
     );
   };
 
-  const PostCard = ({ post }: { post: BlogPost }) => {
+  const PostCard = ({ key, post }: { key: string; post: BlogPost }) => {
     return (
       <li
-        key={post.id}
+        key={key}
         className='group min-h-60 flex flex-col p-4 bg-white/75 hover:bg-white/90 transition-all duration-200 ease-in-out text-black/75 rounded-2xl'
       >
         <Link
@@ -99,7 +99,7 @@ export default function BlogList() {
       {!memoizedPosts.length && <EmptyList />}
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
         {memoizedPosts.map((post) => (
-          <PostCard post={post} />
+          <PostCard key={post.id} post={post} />
         ))}
       </ul>
     </div>
