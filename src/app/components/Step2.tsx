@@ -1,13 +1,10 @@
 'use client';
 
 import { categories } from '@/app/utils/constants';
-import { useBlog } from '../context/BlogContext';
 import AppSelect from './AppSelect';
 import AppTextArea from './AppTextArea';
 
 const Step2 = () => {
-  const { state, dispatch } = useBlog();
-
   return (
     <div>
       <h2 className='mb-6 text-xl'>

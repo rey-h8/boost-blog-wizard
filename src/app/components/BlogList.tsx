@@ -72,7 +72,7 @@ export default function BlogList() {
       <div className='flex flex-col justify-center items-center container p-6 md:p-10 xl:px-14  mx-auto w-full max-w-3xl 2xl:max-w-4xl bg-white/90 rounded-xl'>
         <h2 className='text-2xl font-semibold mb-4 '>No Posts Yet</h2>
         <p className='text-lg mb-6 text-center'>
-          It looks like you haven't written any posts yet 😯
+          It looks like you haven&apos;t written any posts yet 😯
           <br />
           Start sharing your thoughts and ideas with the world! 🌍
         </p>
