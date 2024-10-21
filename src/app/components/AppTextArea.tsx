@@ -3,16 +3,23 @@ import { Textarea } from '@/components/ui/textarea';
 import { sanitizeInput } from '@/lib/utils';
 import { NewBlogPost, useBlog } from '../context/BlogContext';
 
-const AppTextArea = ({ label, field }: { label: string; field: string }) => {
+const AppTextArea = ({
+  label,
+  field,
+  rows = 4,
+}: {
+  label: string;
+  field: string;
+  rows?: number;
+}) => {
   const { state, dispatch } = useBlog();
 
   return (
-    <>
+    <div className='space-y-1'>
       <Label htmlFor={field}>{label}</Label>
       <Textarea
-        placeholder='Type your message here.'
         id={field}
-        rows={3}
+        rows={rows}
         required
         onChange={(e) =>
           dispatch({
@@ -24,7 +31,7 @@ const AppTextArea = ({ label, field }: { label: string; field: string }) => {
           state.currentPost[field as keyof NewBlogPost] || ''
         )}
       />
-    </>
+    </div>
   );
 };
 

@@ -18,14 +18,16 @@ type AppSelectProps = {
 const AppSelect = ({ label, field, data }: AppSelectProps) => {
   const { state, dispatch } = useBlog();
   return (
-    <>
+    <div className='space-y-1'>
       <Label>{label}</Label>
       <Select
-        defaultValue={state.currentPost[field as keyof NewBlogPost]}
+        defaultValue={sanitizeInput(
+          state.currentPost[field as keyof NewBlogPost] || ''
+        )}
         onValueChange={(e) =>
           dispatch({
             type: 'SET_CURRENT_POST',
-            payload: { category: e },
+            payload: { category: sanitizeInput(e) as keyof NewBlogPost },
           })
         }
       >
@@ -40,7 +42,7 @@ const AppSelect = ({ label, field, data }: AppSelectProps) => {
           ))}
         </SelectContent>
       </Select>
-    </>
+    </div>
   );
 };
 

@@ -3,33 +3,22 @@
 import { categories } from '@/app/utils/constants';
 import { useBlog } from '../context/BlogContext';
 import AppSelect from './AppSelect';
-import TextArea from './AppTextArea';
+import AppTextArea from './AppTextArea';
 
 const Step2 = () => {
   const { state, dispatch } = useBlog();
 
   return (
     <div>
-      <h2>Step 2: Blog Summary & Category</h2>
-      <TextArea label='Blog Summary' field='summary' />
+      <h2 className='mb-6 text-xl'>
+        Step 2 of 4: <strong>Post Summary & Category</strong>
+      </h2>
 
-      <AppSelect label='Blog Category' field='category' data={categories} />
+      <div className='space-y-4'>
+        <AppTextArea label='Post Summary' field='summary' />
 
-      {/* <select
-        name='category'
-        required
-        className='rounded-lg'
-
-      >
-        <option key='select' value=''>
-          -- Select category --
-        </option>
-        {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select> */}
+        <AppSelect label='Post Category' field='category' data={categories} />
+      </div>
     </div>
   );
 };

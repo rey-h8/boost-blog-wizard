@@ -11,7 +11,7 @@ type AppInputProps = {
 const AppInput = ({ label, field, type = 'text' }: AppInputProps) => {
   const { state, dispatch } = useBlog();
   return (
-    <>
+    <div className='space-y-1'>
       <Label htmlFor={field}>{label}</Label>
       <Input
         type={type}
@@ -27,7 +27,7 @@ const AppInput = ({ label, field, type = 'text' }: AppInputProps) => {
           })
         }
       />
-    </>
+    </div>
   );
 };
 

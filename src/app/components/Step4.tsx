@@ -32,18 +32,22 @@ const Step4 = () => {
     html?: boolean;
   }) => {
     return (
-      <div>
+      <div className='space-y-1'>
         <p className={clsx(['font-bold', titleClassName])}>{label}</p>
         {html ? (
-          <p
-            dangerouslySetInnerHTML={{
-              __html: state.currentPost[field as keyof BlogPost] || '',
-            }}
-          />
+          <div className='min-h-10 rounded-md border border-border border-gray-300 p-2'>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: state.currentPost[field as keyof BlogPost] || '',
+              }}
+            />
+          </div>
         ) : (
-          <p className={clsx(['whitespace-pre-line', contentClassName])}>
-            {state.currentPost[field as keyof BlogPost]}
-          </p>
+          <div className='min-h-10 rounded-md border border-border border-gray-300 p-2'>
+            <p className={clsx(['whitespace-pre-line', contentClassName])}>
+              {state.currentPost[field as keyof BlogPost]}
+            </p>
+          </div>
         )}
         {errors[field as keyof BlogPostError] && (
           <small className={clsx(['text-red-700', errorClassName])}>
@@ -56,7 +60,9 @@ const Step4 = () => {
 
   return (
     <div>
-      <h2 className='font-bold text-xl'>Review Your Blog Post</h2>
+      <h2 className='mb-6 text-xl'>
+        Step 4 of 4: <strong>Review Your Blog Post</strong>
+      </h2>
 
       <div className='space-y-4'>
         <ReviewItem label='Title' field='title' />
