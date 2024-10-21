@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Header } from './components/Header';
@@ -29,9 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${fontClass} max-h-full overflow-y-auto relative`}>
+      <body className={`${fontClass} h-screen overflow-y-auto relative`}>
+        <Toaster richColors />
         <Header />
-        <div className='mt-20'>
+        <div className='mt-20 h-screen'>
           <BlogProvider>{children}</BlogProvider>
         </div>
       </body>

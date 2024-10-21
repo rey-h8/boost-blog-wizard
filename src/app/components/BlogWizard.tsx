@@ -1,16 +1,18 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useBlog } from '../context/BlogContext';
-import Button from './Button';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 
 const BlogWizard = () => {
+  const { state, addPost, dispatch, errors } = useBlog();
   const [step, setStep] = useState<number>(1);
-  const { state } = useBlog();
+  const router = useRouter();
 
   const handleNext = () => {
     if (step < 4) {
@@ -22,6 +24,10 @@ const BlogWizard = () => {
     if (step > 1) {
       setStep(step - 1);
     }
+  };
+
+  const handleSubmit = () => {
+    addPost();
   };
 
   const renderStep = () => {
@@ -40,33 +46,29 @@ const BlogWizard = () => {
   };
 
   return (
-    <div>
-      <>
-        <div>
-          <strong>Title:</strong>
-          <p>{state.currentPost.title}</p>
+    <div className='h-full p-6'>
+      <div className='py-4 px-6 bg-white max-w-2xl mx-auto rounded-lg '>
+        {renderStep()}
+        <div className='flex flex-row mt-8 gap-4'>
+          <div className='flex flex-row w-full justify-end '>
+            {step > 1 && (
+              <Button variant='outline' onClick={handleBack}>
+                Back
+              </Button>
+            )}
+          </div>
+          <div className='flex flex-row w-full justify-start '>
+            {step < 4 && <Button onClick={handleNext}>Next</Button>}
+            {step === 4 && (
+              <Button
+                disabled={!!Object.keys(errors).length}
+                onClick={handleSubmit}
+              >
+                Submit
+              </Button>
+            )}
+          </div>
         </div>
-        <div>
-          <strong>Author:</strong>
-          <p>{state.currentPost.author}</p>
-        </div>
-        <div>
-          <strong>Summary:</strong>
-          <p>{state.currentPost.summary}</p>
-        </div>
-        <div>
-          <strong>Category:</strong>
-          <p>{state.currentPost.category}</p>
-        </div>
-        <div>
-          <strong>Content:</strong>
-          <p>{state.currentPost.content}</p>
-        </div>
-      </>
-      {renderStep()}
-      <div>
-        {step > 1 && <Button onClick={handleBack}>Back</Button>}
-        {step < 4 && <Button onClick={handleNext}>Next</Button>}
       </div>
     </div>
   );

@@ -1,56 +1,70 @@
 'use client';
-
-import { useRouter } from 'next/navigation';
-import { useBlog } from '../context/BlogContext';
-import Button from './Button';
+import clsx from 'clsx';
+import { useEffect } from 'react';
+import {
+  BlogPost,
+  BlogPostError,
+  NewBlogPost,
+  useBlog,
+} from '../context/BlogContext';
 
 const Step4 = () => {
-  const { state, addPost, dispatch, errors } = useBlog();
-  const router = useRouter();
+  const { state, errors, setErrors, validatePost } = useBlog();
 
-  const handleSubmit = () => {
-    addPost();
-    if (!Object.keys(errors).length) {
-      dispatch({ type: 'RESET_CURRENT_POST' });
-      router.push('/');
-    }
+  useEffect(() => {
+    const formErrors = validatePost(state.currentPost as NewBlogPost);
+    setErrors(formErrors);
+  }, [state.currentPost]);
+
+  const ReviewItem = ({
+    label,
+    field,
+    titleClassName,
+    contentClassName,
+    errorClassName,
+    html = false,
+  }: {
+    label: string;
+    field: string;
+    titleClassName?: string;
+    contentClassName?: string;
+    errorClassName?: string;
+    html?: boolean;
+  }) => {
+    return (
+      <div>
+        <p className={clsx(['font-bold', titleClassName])}>{label}</p>
+        {html ? (
+          <p
+            dangerouslySetInnerHTML={{
+              __html: state.currentPost[field as keyof BlogPost] || '',
+            }}
+          />
+        ) : (
+          <p className={clsx(['whitespace-pre-line', contentClassName])}>
+            {state.currentPost[field as keyof BlogPost]}
+          </p>
+        )}
+        {errors[field as keyof BlogPostError] && (
+          <small className={clsx(['text-red-700', errorClassName])}>
+            {errors[field as keyof BlogPostError]}
+          </small>
+        )}
+      </div>
+    );
   };
 
   return (
     <div>
-      <h2>Review Your Blog Post</h2>
-      <div>
-        <strong>Title:</strong>
-        <p>{state.currentPost.title}</p>
+      <h2 className='font-bold text-xl'>Review Your Blog Post</h2>
+
+      <div className='space-y-4'>
+        <ReviewItem label='Title' field='title' />
+        <ReviewItem label='Author' field='author' />
+        <ReviewItem label='Summary' field='summary' />
+        <ReviewItem label='Category' field='category' />
+        <ReviewItem label='Content' field='content' />
       </div>
-      {errors.title && <small className='text-red-700'>{errors.title}</small>}
-      <div>
-        <strong>Author:</strong>
-        <p>{state.currentPost.author}</p>
-      </div>
-      {errors.author && <small className='text-red-700'>{errors.author}</small>}
-      <div>
-        <strong>Summary:</strong>
-        <p>{state.currentPost.summary}</p>
-      </div>
-      {errors.summary && (
-        <small className='text-red-700'>{errors.summary}</small>
-      )}
-      <div>
-        <strong>Category:</strong>
-        <p>{state.currentPost.category}</p>
-      </div>
-      {errors.category && (
-        <small className='text-red-700'>{errors.category}</small>
-      )}
-      <div>
-        <strong>Content:</strong>
-        <p>{state.currentPost.content}</p>
-      </div>
-      {errors.content && (
-        <small className='text-red-700'>{errors.content}</small>
-      )}
-      <Button onClick={handleSubmit}>Submit</Button>
     </div>
   );
 };

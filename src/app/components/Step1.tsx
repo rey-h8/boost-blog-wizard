@@ -1,38 +1,21 @@
 'use client';
 
-import { useBlog } from '../context/BlogContext';
+import AppInput from './AppInput';
 
 const Step1 = () => {
-  const { state, dispatch } = useBlog();
   return (
-    <div>
-      <h2>Step 1: Blog Metadata</h2>
-      <input
-        type='text'
-        name='title'
-        placeholder='Blog Title'
-        required
-        onChange={(e) =>
-          dispatch({
-            type: 'SET_CURRENT_POST',
-            payload: { title: e.target.value },
-          })
-        }
-        value={state.currentPost.title}
-      />
-      <input
-        type='text'
-        name='author'
-        placeholder='Author Name'
-        required
-        onChange={(e) =>
-          dispatch({
-            type: 'SET_CURRENT_POST',
-            payload: { author: e.target.value },
-          })
-        }
-        value={state.currentPost.author}
-      />
+    <div className='container mx-auto p-4'>
+      <h2 className='mb-4'>
+        Step 1 of 4: <strong>Blog Metadata</strong>
+      </h2>
+
+      <div className='flex flex-col gap-1 mb-4'>
+        <AppInput label='Title' field='title' />
+      </div>
+
+      <div className='flex flex-col gap-1'>
+        <AppInput label='Author Name' field='author' />
+      </div>
     </div>
   );
 };

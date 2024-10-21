@@ -33,23 +33,25 @@ export default function BlogList() {
   };
 
   return (
-    <div className='container mx-auto p-4'>
+    <div className='container mx-auto p-4 pb-10'>
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
         {posts.map((post) => (
           <li
             key={post.id}
-            className='flex flex-col p-4  bg-white/80 hover:bg-white/90 transition-all duration-200 ease-in-out text-black/75 rounded-2xl'
+            className='group min-h-60 flex flex-col p-4 bg-white/75 hover:bg-white/90 transition-all duration-200 ease-in-out text-black/75 rounded-2xl'
           >
             <Link
               href={`/blog/${post.id}/${post.slug}`}
               className='flex flex-col h-full'
             >
               <div className='flex flex-col h-full'>
-                <p className='text-xs text-gray-500 text-medium tracking-wide'>
+                <p className='text-xs text-gray-500/80 font-medium tracking-wider'>
                   {new Date(post.date).toLocaleDateString()}
                 </p>
-                <h2 className='text-xl font-semibold'>{post.title}</h2>
-                <p className='my-2 text-base'>{post.summary}</p>
+                <h2 className='text-xl font-semibold line-clamp-2 group-hover:underline'>
+                  {post.title}
+                </h2>
+                <p className='my-2 text-base line-clamp-3'>{post.summary}</p>
               </div>
               <div className='flex justify-between flex-row items-center '>
                 <p className='uppercase text-xs tracking-widest text-rose-600'>
