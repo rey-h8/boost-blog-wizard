@@ -1,6 +1,5 @@
 'use client';
 
-import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useReducer } from 'react';
@@ -65,7 +64,7 @@ const blogReducer = (state: BlogState, action: BlogAction): BlogState => {
       const newPost: BlogPost = {
         id: nanoid(8),
         slug: slugify(action.payload.title, { lower: true }),
-        date: format(new Date(), 'dd-MM-yyyy'),
+        date: new Date().toISOString(),
         ...action.payload,
       };
       return {

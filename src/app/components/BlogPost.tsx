@@ -19,7 +19,7 @@ const BlogPostDetail = () => {
   }
 
   return post ? (
-    <div className='container p-6 md:p-10 xl:px-14 min-h-content mx-auto w-full max-w-3xl 2xl:max-w-4xl bg-white/90'>
+    <div className='container p-6 md:p-10 xl:px-14 min-h-content mx-auto max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-2xl 2xl:max-w-3xl bg-white/90'>
       <p className='uppercase text-muted-foreground tracking-wide font-semibold mb-2'>
         {post?.category}
       </p>
