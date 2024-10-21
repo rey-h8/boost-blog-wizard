@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { BlogPost, useBlog } from '../context/BlogContext';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -84,15 +85,20 @@ export default function BlogList() {
     );
   };
 
+  const memoizedPosts = useMemo(
+    () => posts.sort((post1, post2) => post2.date.localeCompare(post1.date)),
+    [posts]
+  );
+
   return !isReady ? (
     <div className='flex flex-row justify-center items-center h-full'>
       <LoadingSpinner className='size-24 stroke-white' />
     </div>
   ) : (
     <div className='container mx-auto p-4 pb-10'>
-      {!posts.length && <EmptyList />}
+      {!memoizedPosts.length && <EmptyList />}
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
-        {posts.map((post) => (
+        {memoizedPosts.map((post) => (
           <PostCard post={post} />
         ))}
       </ul>
