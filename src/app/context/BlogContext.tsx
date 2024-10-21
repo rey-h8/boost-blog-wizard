@@ -1,5 +1,6 @@
 'use client';
 
+import { format } from 'date-fns';
 import { nanoid } from 'nanoid';
 import { useRouter } from 'next/navigation';
 import {
@@ -64,7 +65,7 @@ const blogReducer = (state: BlogState, action: BlogAction): BlogState => {
       const newPost: BlogPost = {
         id: nanoid(8),
         slug: slugify(action.payload.title, { lower: true }),
-        date: new Date().toLocaleDateString(),
+        date: format(new Date(), 'dd-MM-yyyy'),
         ...action.payload,
       };
       return {
@@ -107,8 +108,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: '5 Essential Tools for Web Developers in 2024',
         summary:
           'This blog explores 5 essential tools for web developers in 2024',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: '5-essential-tools-for-web-developers-in-2024',
         date: '23-09-2024',
         category: 'Tech',
@@ -119,8 +121,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'A Deep Dive into Node.js Performance Optimization',
         summary:
           'This blog explores a deep dive into node.js performance optimization',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: 'a-deep-dive-into-node-js-performance-optimization',
         date: '07-10-2024',
         category: 'Tech',
@@ -131,8 +134,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'Understanding Kubernetes: A Beginner’s Guide',
         summary:
           'This blog explores understanding kubernetes: a beginner’s guide',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: 'understanding-kubernetes-a-beginners-guide',
         date: '20-09-2024',
         category: 'Tech',
@@ -143,8 +147,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'The Future of React Native: Trends to Watch',
         summary:
           'This blog explores the future of react native: trends to watch',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: 'the-future-of-react-native-trends-to-watch',
         date: '01-10-2024',
         category: 'Tech',
@@ -155,8 +160,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'Exploring the Latest Features of PostgreSQL 15',
         summary:
           'This blog explores exploring the latest features of postgresql 15',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: 'exploring-the-latest-features-of-postgresql-15',
         date: '17-09-2024',
         category: 'Tech',
@@ -167,8 +173,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'Top 5 Business Trends Shaping 2024',
         summary:
           'This blog discusses the top 5 business trends that are expected to shape 2024.',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: 'top-5-business-trends-shaping-2024',
         date: '25-09-2024',
         category: 'Business',
@@ -179,8 +186,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'How AI is Revolutionizing the Business World',
         summary:
           'This blog examines how AI is transforming various sectors in the business world.',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: 'how-ai-is-revolutionizing-the-business-world',
         date: '05-10-2024',
         category: 'Business',
@@ -191,8 +199,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: '10 Simple Habits for a Healthier Lifestyle',
         summary:
           'This blog covers 10 simple habits you can adopt for a healthier lifestyle.',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: '10-simple-habits-for-a-healthier-lifestyle',
         date: '02-10-2024',
         category: 'Lifestyle',
@@ -203,8 +212,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
         title: 'The Ultimate Guide to Work-Life Balance',
         summary:
           'This blog provides the ultimate guide to achieving a better work-life balance.',
-        content:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris magna magna, rutrum in purus dapibus, aliquet rutrum augue. Integer varius imperdiet orci, ut tempor mi. Suspendisse enim nibh, viverra ut tempor eu, pulvinar id libero. In hac habitasse platea dictumst. Aenean nibh diam, feugiat auctor mi id, feugiat aliquam eros. Pellentesque arcu turpis, interdum at dolor non, mollis accumsan risus.
+
+In semper, sapien non viverra ultricies, mi nisl volutpat erat, a luctus massa libero a magna. Aliquam placerat mi quis risus hendrerit suscipit. Nam elit velit, consequat a massa sed, feugiat posuere ante. Donec massa nulla, malesuada id fermentum id, mollis placerat elit.`,
         slug: 'the-ultimate-guide-to-work-life-balance',
         date: '30-09-2024',
         category: 'Lifestyle',
@@ -217,7 +227,9 @@ export const BlogProvider = ({ children }: { children: React.ReactNode }) => {
     let posts = JSON.parse(savedPosts || '[]');
 
     if (!posts.length) {
-      posts = dummyPosts;
+      posts = dummyPosts.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
     }
 
     dispatch({ type: 'REPLACE_POSTS', payload: posts });

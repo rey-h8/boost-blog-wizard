@@ -21,7 +21,7 @@ const AppSelect = ({ label, field, data }: AppSelectProps) => {
     <div className='space-y-1'>
       <Label>{label}</Label>
       <Select
-        defaultValue={sanitizeInput(
+        value={sanitizeInput(
           state.currentPost[field as keyof NewBlogPost] || ''
         )}
         onValueChange={(e) =>

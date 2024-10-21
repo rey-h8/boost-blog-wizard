@@ -9,7 +9,10 @@ type AppInputProps = {
   type?: string;
 };
 const AppInput = ({ label, field, type = 'text' }: AppInputProps) => {
-  const { state, dispatch } = useBlog();
+  const {
+    state: { currentPost },
+    dispatch,
+  } = useBlog();
   return (
     <div className='space-y-1'>
       <Label htmlFor={field}>{label}</Label>
@@ -17,9 +20,7 @@ const AppInput = ({ label, field, type = 'text' }: AppInputProps) => {
         type={type}
         id={field}
         required
-        defaultValue={sanitizeInput(
-          state.currentPost[field as keyof NewBlogPost] || ''
-        )}
+        value={sanitizeInput(currentPost[field as keyof NewBlogPost] || '')}
         onChange={(e) =>
           dispatch({
             type: 'SET_CURRENT_POST',
