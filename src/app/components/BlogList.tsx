@@ -36,7 +36,7 @@ export default function BlogList() {
   };
 
   return !isReady ? (
-    <div className='flex flex-row justify-center items-center h-[calc(100vh - 80px)]'>
+    <div className='flex flex-row justify-center items-center h-full'>
       <LoadingSpinner className='size-24 stroke-white' />
     </div>
   ) : (

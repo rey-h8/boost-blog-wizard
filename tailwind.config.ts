@@ -57,6 +57,15 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      height: {
+        content: 'calc(100vh - var(--header-height))',
+      },
+      minHeight: {
+        content: 'calc(100vh - var(--header-height))',
+      },
+      maxHeight: {
+        content: 'calc(100vh - var(--header-height))',
+      },
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports

@@ -30,11 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${fontClass} h-screen overflow-y-auto relative`}>
+      <body className={`${fontClass} overflow-y-auto relative h-content`}>
         <Toaster richColors />
         <BlogProvider>
           <Header />
-          <div className='mt-20'>{children}</div>
+          <div className='pt-20 h-full'>{children}</div>
         </BlogProvider>
       </body>
     </html>

@@ -19,7 +19,7 @@ const BlogPostDetail = () => {
   }
 
   return post ? (
-    <div className='container p-6 md:p-10 xl:px-14 min-h-screen mx-auto w-full max-w-3xl 2xl:max-w-4xl bg-white/90'>
+    <div className='container p-6 md:p-10 xl:px-14 min-h-content mx-auto w-full max-w-3xl 2xl:max-w-4xl bg-white/90'>
       <p className='uppercase text-muted-foreground tracking-wide font-semibold mb-2'>
         {post?.category}
       </p>
@@ -38,7 +38,7 @@ const BlogPostDetail = () => {
       <p className='text-lg/7 mt-4 whitespace-pre-line'>{post?.content}</p>
     </div>
   ) : (
-    <div className='flex justify-center items-center h-[calc(100%-80px)]'>
+    <div className='flex justify-center items-center h-full'>
       <LoadingSpinner className='size-24 stroke-white' />
     </div>
   );
